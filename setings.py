@@ -11,5 +11,6 @@ FPS = 20
 win = pyg.display.set_mode((win_width, win_height))
 
 clock = pyg.time.Clock()
+player_image = "textures/player.png"
 
 background_img = pyg.transform.scale(pyg.image.load("textures/background.png"), (700, 500))
