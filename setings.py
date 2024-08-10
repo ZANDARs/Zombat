@@ -14,3 +14,8 @@ clock = pyg.time.Clock()
 player_image = "textures/player.png"
 
 background_img = pyg.transform.scale(pyg.image.load("textures/background.png"), (700, 500))
+
+bullet_image = "textures/bullet.png"
+
+fire_sound = None
+bullets = pyg.sprite.Group()

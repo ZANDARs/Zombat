@@ -32,19 +32,27 @@ class Player(Game_sprite):
         super().__init__(x, y, speed, image, width, height)
         self.max_hp = 100
         self.hp = self.max_hp
-        self.bullets = []
-
+        self.reload = 0
+        self.rate = 10
     def update(self):
-        self.hitbox.center = self.rect.center
+#        self.hitbox.center = self.rect.center
         keys = pyg.key.get_pressed()
-        if keys[pyg.K_a] and self.rect.x > 0:
-            self.rect.x -= self.speed
-        elif keys[pyg.K_d] and self.rect.x < 675:
-            self.rect.x += self.speed
-        elif keys[pyg.K_w] and self.rect.y > 0:
-            self.rect.y -= self.speed
-        elif keys[pyg.K_s] and self.rect.y < 475:
-            self.rect.y += self.speed
+        ms = pyg.mouse.get_pressed()
+        if keys[pygame.K_a] and self.rect.x > 0:
+            self.rect.centerx -= self.speed
+        if keys[pygame.K_d] and self.rect.x < win_width - self.rect.width:
+            self.rect.centerx += self.speed
+        if keys[pygame.K_w] and self.rect.y > 0:
+            self.rect.centery -= self.speed
+        if keys[pygame.K_s] and self.rect.y < win_height - self.rect.height:
+            self.rect.centery += self.speed
+        if ms[0]:
+            if self.reload == 0:
+                self.fire()
+                self.reload = self.rate
+
+        if self.reload != 0:
+            self.reload -= 1
 
         pos = pyg.mouse.get_pos()
         dx = pos[0] - self.rect.centerx
@@ -52,3 +60,24 @@ class Player(Game_sprite):
         ang = math.degrees(math.atan2(dy, dx))
 
         self.rotate(ang - 90)
+
+    def fire(self):
+        #тут має бути звук типу
+        pos = pyg.mouse.get_pos()
+        dx = pos[0] - self.rect.centerx
+        dy = self.rect.centery - pos[1]
+        ang = -math.atan2(dy, dx)
+        b = Bullet(bullet_image, self.rect.centerx, self.rect.centery, 3, 6, 70, ang)
+        bullets.add(b)
+
+
+class Bullet(Game_sprite):
+    def __init__(self, image, x, y, w, h, speed, angle):
+        super().__init__(x, y, speed, image, w, h)
+        self.angle = angle
+
+    def update(self):
+        self.hitbox.center = self.rect.center
+        self.rotate(math.degrees(-self.angle) - 90)
+        self.rect.x += math.cos(self.angle) * self.speed
+        self.rect.y += math.sin(self.angle) * self.speed

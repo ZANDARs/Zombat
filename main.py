@@ -14,6 +14,10 @@ while True:
         win.blit(background_img, (0, 0))
         player.update()
         player.draw()
+        bullets.update()
+        bullets.draw(win)
+#        bullet.fly()
+ #       bullet.draw()
 
     pyg.display.update()
     clock.tick(FPS)
