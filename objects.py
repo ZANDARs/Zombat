@@ -81,3 +81,16 @@ class Bullet(Game_sprite):
         self.rotate(math.degrees(-self.angle) - 90)
         self.rect.x += math.cos(self.angle) * self.speed
         self.rect.y += math.sin(self.angle) * self.speed
+
+
+class Zombie(Game_sprite):
+    def __init__(self, x, y, speed, image, width, height):
+        super().__init__(x, y, speed, image, width, height)
+        self.max_hp = 100
+        self.hp = self.max_hp
+
+    def movement(self):
+        pos = pyg.mouse.get_pos()
+        dx = pos[0] - self.rect.centerx
+        dy = self.rect.centery - pos[1]
+        ang = -math.atan2(dy, dx)
