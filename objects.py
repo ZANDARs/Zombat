@@ -22,6 +22,9 @@ class Game_sprite(pyg.sprite.Sprite):
         self.image = pyg.transform.rotate(self.start_image, angle)
         self.rect = self.image.get_rect(center=(self.rect.centerx, self.rect.centery))
 
+    def change_image(self, new_image):
+        self.image = pyg.transform.scale(pyg.image.load(new_image).convert_alpha(), (self.width, self.height))
+        self.start_image = self.image
 
 
     def draw(self):
@@ -86,11 +89,31 @@ class Bullet(Game_sprite):
 class Zombie(Game_sprite):
     def __init__(self, x, y, speed, image, width, height):
         super().__init__(x, y, speed, image, width, height)
-        self.max_hp = 100
+        self.max_hp = 1
         self.hp = self.max_hp
 
-    def movement(self):
-        pos = pyg.mouse.get_pos()
-        dx = pos[0] - self.rect.centerx
-        dy = self.rect.centery - pos[1]
-        ang = -math.atan2(dy, dx)
+    def spawn(self):
+        self.change_image(random.choice(zombie_images))
+        self.hp = self.max_hp
+
+        cr = random.randint(1, 4)
+        if cr == 1:
+            x = 10
+            y = random.randint(1, win_height)
+        elif cr == 2:
+            x = win_width - 10
+            y = random.randint(1, win_height)
+        elif cr == 3:
+            x = random.randint(1, win_width)
+            y = 10
+        elif cr == 4:
+            x = random.randint(1, win_width)
+            y = win_height - 10
+        self.rect.y = y
+        self.rect.x = x
+
+    def movement(self, angle):
+        self.hitbox.center = self.rect.center
+        self.rotate(math.degrees(-angle) - 90)
+        self.rect.x += math.cos(angle) * self.speed
+        self.rect.y += math.sin(angle) * self.speed
