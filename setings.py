@@ -18,7 +18,7 @@ background_img = pyg.transform.scale(pyg.image.load("textures/background.png"), 
 
 bullet_image = "textures/bullet.png"
 
-
+zombie_images = ["textures/zomb_1.png", "textures/zomb_2.png", "textures/zomb_3.png"]
 
 
 
@@ -26,3 +26,4 @@ bullet_image = "textures/bullet.png"
 
 fire_sound = None
 bullets = pyg.sprite.Group()
+enemmies = pyg.sprite.Group()
