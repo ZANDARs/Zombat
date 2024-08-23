@@ -11,7 +11,7 @@ player = Player(100, 100, 5, player_image, 25, 25)
 game = True
 
 for i in range (15):
-    zomb = Zombie(-10, 500, 5, zombie_images[0], 25, 25)
+    zomb = Zombie(-10, 500, 2, zombie_images[0], 25, 25)
     zomb.spawn()
     enemmies.add(zomb)
 
@@ -36,6 +36,13 @@ while True:
         player.draw()
         bullets.update()
         bullets.draw(win)
+
+        for bullet in bullets:
+            hits = pygame.sprite.spritecollide(bullet, enemmies, True)
+            if hits:
+                print("test")
+                # Додаткові дії при зіткненні (наприклад, видалення кулі або зомбі)
+                bullets.remove(bullet)
 #        bullet.fly()
  #       bullet.draw()
 
