@@ -16,7 +16,7 @@ class Game_sprite(pyg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = x, y
 
-        self.hitbox = pyg.Rect(self.rect.x, self.rect.y, width/2, height/2)
+        self.hitbox = pyg.Rect(self.rect.x, self.rect.y, width//2, height//2)
 
     def rotate(self, angle):
         self.image = pyg.transform.rotate(self.start_image, angle)
@@ -38,7 +38,7 @@ class Player(Game_sprite):
         self.reload = 0
         self.rate = 10
     def update(self):
-#        self.hitbox.center = self.rect.center
+        self.hitbox.center = self.rect.center
         keys = pyg.key.get_pressed()
         ms = pyg.mouse.get_pressed()
         if keys[pygame.K_a] and self.rect.x > 0:
