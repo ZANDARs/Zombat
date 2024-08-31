@@ -117,3 +117,27 @@ class Zombie(Game_sprite):
         self.rotate(math.degrees(-angle) - 90)
         self.rect.x += math.cos(angle) * self.speed
         self.rect.y += math.sin(angle) * self.speed
+
+class Button(pyg.sprite.Sprite):
+    def __init__(self, x, y, width, height, text, color, callback):
+        super().__init__()
+        self.x = x
+        self.y = y
+        self.text = text
+        self.color = color
+        r = min(color[0] + 15, 255)
+        g = min(color[1] + 15, 255)
+        b = min(color[2] + 15, 255)
+        self.light_color = color(r, g, b)
+        self.callback = callback
+        self.pressed = False
+
+        self.image = pyg.Surface((width, height))
+        rect = self.image.get_rect()
+        rect.center = x, y
+        self.image.fill(self.color)
+        self.text_surface = text
+        self.label_rect = self.text_surface.get_rect()
+        self.label_rect.centerx = width / 2
+        self.label_rect.centery = height / 2
+        self.image.blit(self.text_surface, self.label_rect)
