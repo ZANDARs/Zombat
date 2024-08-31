@@ -11,6 +11,9 @@ win_height = 500
 
 FPS = 20
 
+total_time = 20
+start_ticks = pyg.time.get_ticks()
+
 font_ = font.Font(None, 65)
 
 win = pyg.display.set_mode((win_width, win_height + 50))
